@@ -18,37 +18,39 @@ function App() {
   const handleCategorizeButton = (
     name: string,
     type: string,
-    index: number
+    index?: number
   ) => {
-    let newButtonList = [...buttonList];
+    if (index !== undefined) {
+      let newButtonList = [...buttonList];
 
-    // Remove the button from the list
-    const [removedButton] = newButtonList.splice(index, 1);
+      // Remove the button from the list
+      const [removedButton] = newButtonList.splice(index, 1);
 
-    // Set new button list
-    setButtonList(newButtonList);
+      // Set new button list
+      setButtonList(newButtonList);
 
-    let timeoutID;
+      let timeoutID;
 
-    // Classified the removed button according to its type
-    if (removedButton.type === ButtonTypeEnum.fruit) {
-      setFruitList((prev) => [...prev, removedButton]);
+      // Classified the removed button according to its type
+      if (removedButton.type === ButtonTypeEnum.fruit) {
+        setFruitList((prev) => [...prev, removedButton]);
 
-      // Set timeout and callback function
-      timeoutID = setTimeout(() => {
-        handleUncategorizeButton(name, type);
-      }, 5000);
-    } else if (removedButton.type === ButtonTypeEnum.vegetable) {
-      setVegetableList((prev) => [...prev, removedButton]);
+        // Set timeout and callback function
+        timeoutID = setTimeout(() => {
+          handleUncategorizeButton(name, type);
+        }, 5000);
+      } else if (removedButton.type === ButtonTypeEnum.vegetable) {
+        setVegetableList((prev) => [...prev, removedButton]);
 
-      // Set timeout and callback function
-      timeoutID = setTimeout(() => {
-        handleUncategorizeButton(name, type);
-      }, 5000);
+        // Set timeout and callback function
+        timeoutID = setTimeout(() => {
+          handleUncategorizeButton(name, type);
+        }, 5000);
+      }
+
+      // Store timeout ID
+      setTimeoutIDMap(timeoutIDMap.set(name, timeoutID));
     }
-
-    // Store timeout ID
-    setTimeoutIDMap(timeoutIDMap.set(name, timeoutID));
   };
 
   const handleUncategorizeButton = (name: string, type: string) => {

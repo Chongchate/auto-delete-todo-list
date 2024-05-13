@@ -5,7 +5,7 @@ import Button from "./Button";
 
 interface Props {
   buttons: IButton[];
-  onButtonClicked: (name: string, type: string, index: number) => void;
+  onButtonClicked: (name: string, type: string, index?: number) => void;
 }
 
 const StyledContainer = styled.div`
